@@ -38,6 +38,7 @@ public class RecordPaths : MonoBehaviour
     /// <summary>Подписки</summary>
     private void Subscribe()
     {
+        EventManager.OnSpawnPlayer += OnSpawnPlayer;
         EventManager.OnFinish += OnFinish;
     }
 
@@ -45,6 +46,7 @@ public class RecordPaths : MonoBehaviour
     private void UnSubscribe()
     {
         EventManager.OnFinish -= OnFinish;
+        EventManager.OnSpawnPlayer -= OnSpawnPlayer;
     }
 
     /// <summary>
@@ -54,6 +56,16 @@ public class RecordPaths : MonoBehaviour
     {
         StopAllCoroutines();
         pathsContainer.Paths.Add(path);
+    }
+
+    /// <summary>
+    /// Обработчик события спавна игрока
+    /// </summary>
+    /// <param name="_transform"></param>
+    private void OnSpawnPlayer (Transform _transform)
+    {
+        transformPlayer = _transform;
+        CheckStart();
     }
     #endregion
 
@@ -71,8 +83,6 @@ public class RecordPaths : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //TODO переделать на событие старта
-        CheckStart();
     }
 
     /// <summary>

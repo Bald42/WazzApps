@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251ff6385a8819a43ac7c593535f6805, type: 3}
   m_Name: PathsContainer
   m_EditorClassIdentifier: 
-  Paths: []
+  Paths:
+  - WayPoints: []
+  - WayPoints: []
+  - WayPoints: []
