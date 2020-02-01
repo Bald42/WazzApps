@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/SampleScenes/Scenes/Car.unity
     guid: 41b8fdb98491fab48a0cd641d4c0e3b1
   - enabled: 1
-    path: Assets/SampleScenes/Scenes/CarAIWaypointBased.unity
+    path: Assets/Scenes/Game.unity
     guid: 81ce53b350e0a3247ae838c0d57967ab
   m_configObjects: {}
