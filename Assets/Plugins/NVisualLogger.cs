@@ -131,4 +131,9 @@ public class NVisualLogger : MonoBehaviour {
 			GUI.Label(timeRect, time, style); 
 		}
 	}
+
+    public void Active ()
+    {
+        this.enabled = !this.enabled;
+    }
 }

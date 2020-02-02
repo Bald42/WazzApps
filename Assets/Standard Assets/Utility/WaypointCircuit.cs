@@ -38,15 +38,11 @@ namespace UnityStandardAssets.Utility
         private Vector3 P3;
 
         // Use this for initialization
-        private void Awake()
+        private void Start()
         {
-            if (Waypoints.Count > 1)
-            {
-                CachePositionsAndDistances();
-            }
+            CachePositionsAndDistances();
             numPoints = Waypoints.Count;
         }
-
 
         public RoutePoint GetRoutePoint(float dist)
         {
@@ -64,22 +60,8 @@ namespace UnityStandardAssets.Utility
 
             if (Length == 0)
             {
-                Length = distances[distances.Length - 1];
+                Length = distances[distances.Length-1];
             }
-
-            /*
-            try
-            {
-                if (Length == 0)
-                {
-                    Length = distances[distances.Length - 1];
-                }
-            }
-            catch (FormatException)
-            {
-                Length = 0;
-            }
-            */
 
             dist = Mathf.Repeat(dist, Length);
 

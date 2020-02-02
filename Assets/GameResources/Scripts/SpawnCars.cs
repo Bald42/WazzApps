@@ -86,11 +86,14 @@ public class SpawnCars : MonoBehaviour
             transformBot.GetComponent<DriverName>().Driver_Name = nameDriver;
 
             SpawnWaypointCircuit(nameDriver);
-            transformBot.GetComponent<WaypointProgressTracker>().circuit = newWaypointCircuit;
+            WaypointProgressTracker newWaypointProgressTracker = transformBot.GetComponent<WaypointProgressTracker>();
+            newWaypointProgressTracker.circuit = newWaypointCircuit;
+            newWaypointProgressTracker.Reset();
 
             Color newBotColor = CheckColor();
             AddColorBot(newBotColor, transformBot);
 
+            transformBot.gameObject.SetActive(true);
             numberBot++;
         }
     }

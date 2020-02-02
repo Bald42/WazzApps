@@ -82,6 +82,10 @@ namespace UnityStandardAssets.Utility
 
         private void Update()
         {
+            if (circuit == null)
+            {
+                return;
+            }
             if (progressStyle == ProgressStyle.SmoothAlongRoute)
             {
                 // determine the position we should currently be aiming for
@@ -139,7 +143,7 @@ namespace UnityStandardAssets.Utility
 
         private void OnDrawGizmos()
         {
-            if (Application.isPlaying && circuit.waypointList != null)
+            if (Application.isPlaying && circuit.waypointList != null && circuit.waypointList.items.Count > 0)
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(transform.position, target.position);
