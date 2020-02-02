@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 /// <summary>
 /// Спавним тачки
@@ -17,6 +18,9 @@ public class SpawnCars : MonoBehaviour
     private Transform prefabBot = null;
 
     [SerializeField]
+    private WaypointCircuit prefabWayPount = null;
+
+    [SerializeField]
     private int maxBot = 3;
 
     [SerializeField]
@@ -27,6 +31,10 @@ public class SpawnCars : MonoBehaviour
 
     [SerializeField]
     private List<Transform> startPoint = new List<Transform>();
+
+    private Vector3 newWayPoint = Vector3.zero;
+
+    private WaypointCircuit newWaypointCircuit = new WaypointCircuit();
 
     private void Start()
     {
@@ -40,6 +48,7 @@ public class SpawnCars : MonoBehaviour
     {
         SpawPlayer();
         SpawBots();
+        EventManager.CallStart();
     }
 
     /// <summary>
@@ -69,9 +78,12 @@ public class SpawnCars : MonoBehaviour
 
             Transform startPoint = CheckPosition();
             Transform transformBot = Instantiate(prefabBot, startPoint.position, startPoint.rotation, parent);
-            string name = NameBot();
-            transformBot.name = "Enemy_" + name;
-            transformBot.GetComponent<DriverName>().Driver_Name = name;
+            string nameDriver = NameBot();
+            transformBot.name = "Enemy_" + nameDriver;
+            transformBot.GetComponent<DriverName>().Driver_Name = nameDriver;
+
+            SpawnWaypointCircuit(nameDriver);
+            transformBot.GetComponent<WaypointProgressTracker>().circuit = newWaypointCircuit;
             numberBot++;
         }
     }
@@ -122,8 +134,30 @@ public class SpawnCars : MonoBehaviour
     {
         int rnd = Random.Range(0, ConstString.BotNames.Count);
         string name = ConstString.BotNames[rnd];
-        //TODO потестить, могу на этом посыпаться
         ConstString.BotNames.RemoveAt(rnd);
         return name;
+    }
+
+    /// <summary>
+    /// Спавним вайпоинты
+    /// </summary>
+    private void SpawnWaypointCircuit (string nameDriver)
+    {
+        WaypointCircuit waypointCircuit = Instantiate(prefabWayPount, parent.position, Quaternion.identity, parent);
+        WaypointCircuit.WaypointList waypointList = new WaypointCircuit.WaypointList();
+        waypointCircuit.name = "WayPoints_" + nameDriver;
+        int rnd = Random.Range(0,pathsContainer.Paths.Count);
+        for (int i=0; i < pathsContainer.Paths[rnd].WayPoints.Count; i++)
+        {
+            newWayPoint.x = pathsContainer.Paths[rnd].WayPoints[i].x;
+            newWayPoint.z = pathsContainer.Paths[rnd].WayPoints[i].y;
+
+            GameObject point = new GameObject();
+            GameObject newPoint = Instantiate(point, newWayPoint, Quaternion.identity, waypointCircuit.transform);
+            newPoint.name = "WayPoint" + i.ToString();
+            waypointList.items.Add(newPoint.transform);
+        }
+        waypointCircuit.waypointList = waypointList;
+        newWaypointCircuit = waypointCircuit;
     }
 }

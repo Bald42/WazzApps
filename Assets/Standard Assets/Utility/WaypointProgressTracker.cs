@@ -11,7 +11,7 @@ namespace UnityStandardAssets.Utility
         // This script manages the amount to look ahead along the route,
         // and keeps track of progress and laps.
 
-        [SerializeField] private WaypointCircuit circuit; // A reference to the waypoint-based route we should follow
+        public WaypointCircuit circuit; // A reference to the waypoint-based route we should follow
 
         [SerializeField] private float lookAheadForTargetOffset = 5;
         // The offset ahead along the route that the we will aim for
@@ -118,7 +118,7 @@ namespace UnityStandardAssets.Utility
                 Vector3 targetDelta = target.position - transform.position;
                 if (targetDelta.magnitude < pointToPointThreshold)
                 {
-                    progressNum = (progressNum + 1)%circuit.Waypoints.Length;
+                    progressNum = (progressNum + 1)%circuit.Waypoints.Count;
                 }
 
 

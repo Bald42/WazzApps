@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -19,7 +20,7 @@ namespace UnityStandardAssets.Utility
         public float editorVisualisationSubsteps = 100;
         public float Length { get; private set; }
 
-        public Transform[] Waypoints
+        public List <Transform> Waypoints
         {
             get { return waypointList.items; }
         }
@@ -39,11 +40,11 @@ namespace UnityStandardAssets.Utility
         // Use this for initialization
         private void Awake()
         {
-            if (Waypoints.Length > 1)
+            if (Waypoints.Count > 1)
             {
                 CachePositionsAndDistances();
             }
-            numPoints = Waypoints.Length;
+            numPoints = Waypoints.Count;
         }
 
 
@@ -60,11 +61,27 @@ namespace UnityStandardAssets.Utility
         public Vector3 GetRoutePosition(float dist)
         {
             int point = 0;
-
-            if (Length == 0)
+            /*
+            if (waypointList != null && Length != null && Length == 0)
             {
+                Debug.LogError("Length = " + Length);
+                Debug.LogError("distances = " + distances);
                 Length = distances[distances.Length - 1];
             }
+            */
+            /*
+            try
+            {
+                if (Length == 0)
+                {
+                    Length = distances[distances.Length - 1];
+                }
+            }
+            catch (FormatException)
+            {
+                Length = 0;
+            }
+            */
 
             dist = Mathf.Repeat(dist, Length);
 
@@ -130,19 +147,19 @@ namespace UnityStandardAssets.Utility
         {
             // transfer the position of each point and distances between points to arrays for
             // speed of lookup at runtime
-            points = new Vector3[Waypoints.Length + 1];
-            distances = new float[Waypoints.Length + 1];
+            points = new Vector3[Waypoints.Count + 1];
+            distances = new float[Waypoints.Count + 1];
 
             float accumulateDistance = 0;
             for (int i = 0; i < points.Length; ++i)
             {
-                var t1 = Waypoints[(i)%Waypoints.Length];
-                var t2 = Waypoints[(i + 1)%Waypoints.Length];
+                var t1 = Waypoints[(i)%Waypoints.Count];
+                var t2 = Waypoints[(i + 1)%Waypoints.Count];
                 if (t1 != null && t2 != null)
                 {
                     Vector3 p1 = t1.position;
                     Vector3 p2 = t2.position;
-                    points[i] = Waypoints[i%Waypoints.Length].position;
+                    points[i] = Waypoints[i%Waypoints.Count].position;
                     distances[i] = accumulateDistance;
                     accumulateDistance += (p1 - p2).magnitude;
                 }
@@ -165,9 +182,9 @@ namespace UnityStandardAssets.Utility
         private void DrawGizmos(bool selected)
         {
             waypointList.circuit = this;
-            if (Waypoints.Length > 1)
+            if (Waypoints.Count > 1)
             {
-                numPoints = Waypoints.Length;
+                numPoints = Waypoints.Count;
 
                 CachePositionsAndDistances();
                 Length = distances[distances.Length - 1];
@@ -186,9 +203,9 @@ namespace UnityStandardAssets.Utility
                 }
                 else
                 {
-                    for (int n = 0; n < Waypoints.Length; ++n)
+                    for (int n = 0; n < Waypoints.Count; ++n)
                     {
-                        Vector3 next = Waypoints[(n + 1)%Waypoints.Length].position;
+                        Vector3 next = Waypoints[(n + 1)%Waypoints.Count].position;
                         Gizmos.DrawLine(prev, next);
                         prev = next;
                     }
@@ -201,7 +218,7 @@ namespace UnityStandardAssets.Utility
         public class WaypointList
         {
             public WaypointCircuit circuit;
-            public Transform[] items = new Transform[0];
+            public List <Transform> items = new List <Transform> ();
         }
 
         public struct RoutePoint
@@ -334,9 +351,11 @@ namespace UnityStandardAssets.Utility.Inspector
                 foreach (Transform child in circuit.transform)
                 {
                     children[n++] = child;
+                    circuit.waypointList.items.Add(child);
                 }
                 Array.Sort(children, new TransformNameComparer());
-                circuit.waypointList.items = new Transform[children.Length];
+
+                //circuit.waypointList.items = new List <Transform> children.Length];
                 for (n = 0; n < children.Length; ++n)
                 {
                     circuit.waypointList.items[n] = children[n];
@@ -361,6 +380,8 @@ namespace UnityStandardAssets.Utility.Inspector
             EditorGUI.indentLevel = indent;
             EditorGUI.EndProperty();
         }
+
+
 
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

@@ -17,6 +17,9 @@ public class RecordPaths : MonoBehaviour
     private float intervalRecord = 1f;
 
     [SerializeField]
+    private float minDistance = 1f;
+
+    [SerializeField]
     private Transform transformPlayer = null;
 
     [SerializeField]
@@ -106,8 +109,19 @@ public class RecordPaths : MonoBehaviour
             yield return new WaitForSeconds(intervalRecord);
             //TODO Если, что-то пойдёт не так можно добавить доп проверки (например на дистанцию)
             wayPoint.x = transformPlayer.position.x;
-            wayPoint.y = transformPlayer.position.y;
-            path.WayPoints.Add(wayPoint);
+            wayPoint.y = transformPlayer.position.z;
+
+            if (path.WayPoints.Count > 0)
+            {
+                if ((path.WayPoints[path.WayPoints.Count-1] - wayPoint).sqrMagnitude > minDistance)
+                {
+                    path.WayPoints.Add(wayPoint);
+                }
+            }
+            else
+            {
+                path.WayPoints.Add(wayPoint);
+            }
         }
     }
 }
