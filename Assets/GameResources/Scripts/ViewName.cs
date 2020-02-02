@@ -38,8 +38,7 @@ public class ViewName : MonoBehaviour
         if (isActive)
         {
             Move();
-        }
-        
+        }        
     }
 
     private void Move ()

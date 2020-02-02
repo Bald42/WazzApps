@@ -125,7 +125,6 @@ public class SpawnCars : MonoBehaviour
             viewName.name = "ViewName_" + nameDriver;
             viewName.Init(transformBot, newBotColor, nameDriver);
 
-            //transformBot.gameObject.SetActive(true);
             numberBot++;
         }
     }
