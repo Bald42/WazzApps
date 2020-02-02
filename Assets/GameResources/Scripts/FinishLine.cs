@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class FinishLine : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit (Collider other)
     {
         if (other.tag == ConstString.PLAYER_TAG)
         {

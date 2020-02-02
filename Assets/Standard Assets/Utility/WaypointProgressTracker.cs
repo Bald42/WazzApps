@@ -11,7 +11,7 @@ namespace UnityStandardAssets.Utility
         // This script manages the amount to look ahead along the route,
         // and keeps track of progress and laps.
 
-        [SerializeField] private WaypointCircuit circuit; // A reference to the waypoint-based route we should follow
+        public WaypointCircuit circuit; // A reference to the waypoint-based route we should follow
 
         [SerializeField] private float lookAheadForTargetOffset = 5;
         // The offset ahead along the route that the we will aim for
@@ -82,6 +82,10 @@ namespace UnityStandardAssets.Utility
 
         private void Update()
         {
+            if (circuit == null)
+            {
+                return;
+            }
             if (progressStyle == ProgressStyle.SmoothAlongRoute)
             {
                 // determine the position we should currently be aiming for
@@ -118,7 +122,7 @@ namespace UnityStandardAssets.Utility
                 Vector3 targetDelta = target.position - transform.position;
                 if (targetDelta.magnitude < pointToPointThreshold)
                 {
-                    progressNum = (progressNum + 1)%circuit.Waypoints.Length;
+                    progressNum = (progressNum + 1)%circuit.Waypoints.Count;
                 }
 
 
@@ -139,7 +143,7 @@ namespace UnityStandardAssets.Utility
 
         private void OnDrawGizmos()
         {
-            if (Application.isPlaying)
+            if (Application.isPlaying && circuit.waypointList != null && circuit.waypointList.items.Count > 0)
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(transform.position, target.position);

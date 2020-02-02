@@ -5959,6 +5959,7 @@ GameObject:
   - component: {fileID: 2152902545616203855}
   - component: {fileID: 2152902545616203867}
   - component: {fileID: 2152902545616203861}
+  - component: {fileID: 8164114904902538325}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -6079,6 +6080,19 @@ MonoBehaviour:
   maxRolloffDistance: 500
   dopplerLevel: 1
   useDoppler: 1
+--- !u!114 &8164114904902538325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2152902545621681607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947816f0a207a8a41a867fb9b3613259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Driver_Name: 
 --- !u!1 &2152902545621681609
 GameObject:
   m_ObjectHideFlags: 0
