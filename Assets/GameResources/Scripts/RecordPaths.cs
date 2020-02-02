@@ -60,6 +60,7 @@ public class RecordPaths : MonoBehaviour
         StopAllCoroutines();
         path.WayPoints.RemoveAt(0);
         pathsContainer.Paths.Add(path);
+        StartCoroutine(SavePathInPrefs());
     }
 
     /// <summary>
@@ -108,7 +109,7 @@ public class RecordPaths : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(intervalRecord);
-            //TODO Если, что-то пойдёт не так можно добавить доп проверки (например на дистанцию)
+
             wayPoint.x = transformPlayer.position.x;
             wayPoint.y = transformPlayer.position.z;
 
@@ -122,6 +123,75 @@ public class RecordPaths : MonoBehaviour
             else
             {
                 path.WayPoints.Add(wayPoint);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Сохраняем путь в префсы
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator SavePathInPrefs ()
+    {
+        for (int i=0; i < path.WayPoints.Count; i++)
+        {
+            PlayerPrefs.SetFloat(KeyPrefs.PATH + 
+                                 (pathsContainer.Paths.Count - 1) + 
+                                 KeyPrefs.POINT + 
+                                 i + 
+                                 "X",
+                                 path.WayPoints[i].x);
+
+            PlayerPrefs.SetFloat(KeyPrefs.PATH +
+                                 (pathsContainer.Paths.Count - 1) +
+                                 KeyPrefs.POINT + 
+                                 i + 
+                                 "Z",
+                                 path.WayPoints[i].y);
+            yield return new WaitForFixedUpdate();
+        }
+        PlayerPrefs.Save();
+        //TestPath();
+        yield return null;
+    }
+
+    private void TestPath ()
+    {
+        for (int i = 0; i < int.MaxValue; i++)
+        {
+            if (PlayerPrefs.HasKey(KeyPrefs.PATH +
+                                   i +
+                                   KeyPrefs.POINT +
+                                   "0X"))
+            {
+                for (int j = 0; j < int.MaxValue; j++)
+                {
+                    if (PlayerPrefs.HasKey(KeyPrefs.PATH +
+                               i +
+                               KeyPrefs.POINT +
+                               j +
+                               "X"))
+                    {
+                        float x = PlayerPrefs.GetFloat(KeyPrefs.PATH +
+                                                       i +
+                                                       KeyPrefs.POINT +
+                                                       j +
+                                                       "X");
+                        float z = PlayerPrefs.GetFloat(KeyPrefs.PATH +
+                                                       i +
+                                                       KeyPrefs.POINT +
+                                                       j +
+                                                       "Z");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                break;
             }
         }
     }
