@@ -26,6 +26,23 @@ public class SpawnCars : MonoBehaviour
     [SerializeField]
     private List<Color> colorsBot = new List<Color>();
 
+    private List<string> botNames = new List<string>()
+    {
+        "Dominic Toretto",
+        "Letty Ortiz",
+        "Mia Toretto",
+        "Han Lue",
+        "Roman Pearce",
+        "Tej Parker",
+        "Sean Boswell",
+        "Vinse Kretch",
+        "Rico Santos",
+        "Tego Leo",
+        "Gisele Yashar",
+        "Luke Hobbs",
+        "Elena Neves"
+    };
+
     [SerializeField]
     private PathsContainer pathsContainer = null;
 
@@ -106,10 +123,10 @@ public class SpawnCars : MonoBehaviour
     {
         if (_numberBot <= maxBot)
         {
-            //TODO на свежую голову переписать условия
             if (_numberBot < pathsContainer.Paths.Count &&
                 startPoint.Count > 0 &&
-                ConstString.BotNames.Count > 0)
+                botNames.Count > 0 &&
+                colorsBot.Count > 0)
             {
                 return true;
             }
@@ -142,9 +159,9 @@ public class SpawnCars : MonoBehaviour
     /// <returns></returns>
     private string NameBot ()
     {
-        int rnd = Random.Range(0, ConstString.BotNames.Count);
-        string name = ConstString.BotNames[rnd];
-        ConstString.BotNames.RemoveAt(rnd);
+        int rnd = Random.Range(0, botNames.Count);
+        string name = botNames[rnd];
+        botNames.RemoveAt(rnd);
         return name;
     }
 
