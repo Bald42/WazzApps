@@ -47,7 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypointList:
     circuit: {fileID: 2748045248387041875}
-    items: []
+    items:
+    - {fileID: 2301050363025775492}
+    - {fileID: 4974197208185210744}
   smoothRoute: 1
   editorVisualisationSubsteps: 100
 --- !u!1 &3865772947419992693

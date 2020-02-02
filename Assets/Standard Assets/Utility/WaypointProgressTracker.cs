@@ -139,7 +139,7 @@ namespace UnityStandardAssets.Utility
 
         private void OnDrawGizmos()
         {
-            if (Application.isPlaying)
+            if (Application.isPlaying && circuit.waypointList != null)
             {
                 Gizmos.color = Color.green;
                 Gizmos.DrawLine(transform.position, target.position);

@@ -87,6 +87,10 @@ public class SpawnCars : MonoBehaviour
 
             SpawnWaypointCircuit(nameDriver);
             transformBot.GetComponent<WaypointProgressTracker>().circuit = newWaypointCircuit;
+
+            Color newBotColor = CheckColor();
+            AddColorBot(newBotColor, transformBot);
+
             numberBot++;
         }
     }
@@ -100,9 +104,9 @@ public class SpawnCars : MonoBehaviour
         if (_numberBot <= maxBot)
         {
             //TODO на свежую голову переписать условия
-            if (_numberBot < pathsContainer.Paths.Count)/* &&
-                (maxBot - _numberBot) < startPoint.Count &&
-                (maxBot - _numberBot) < ConstString.BotNames.Count)*/
+            if (_numberBot < pathsContainer.Paths.Count &&
+                startPoint.Count > 0 &&
+                ConstString.BotNames.Count > 0)
             {
                 return true;
             }
@@ -161,5 +165,31 @@ public class SpawnCars : MonoBehaviour
         }
         waypointCircuit.waypointList = waypointList;
         newWaypointCircuit = waypointCircuit;
+    }
+
+    /// <summary>
+    /// Чекаем цвет
+    /// </summary>
+    /// <returns></returns>
+    private Color CheckColor()
+    {
+        int rnd = Random.Range(0, colorsBot.Count);
+        Color _color = colorsBot[rnd];
+        colorsBot.RemoveAt(rnd);
+        return _color;
+    }
+
+    /// <summary>
+    /// Добавляем цвет боту
+    /// </summary>
+    /// <param name="_color"></param>
+    private void AddColorBot (Color _color, Transform _bot)
+    {
+        MeshRenderer [] arrayMaterial = _bot.GetComponentsInChildren<MeshRenderer>();
+        _color.a = 0.25f;
+        for (int i=0; i < arrayMaterial.Length;i++)
+        {
+            arrayMaterial[i].material.color = _color;
+        }
     }
 }
