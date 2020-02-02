@@ -9,7 +9,10 @@ using UnityStandardAssets.Utility;
 public class SpawnCars : MonoBehaviour
 {
     [SerializeField]
-    private Transform parent = null;
+    private Transform parentCar = null;
+
+    [SerializeField]
+    private Transform parentUi = null;
 
     [SerializeField]
     private Transform prefabPlayer = null;
@@ -19,6 +22,9 @@ public class SpawnCars : MonoBehaviour
 
     [SerializeField]
     private WaypointCircuit prefabWayPount = null;
+
+    [SerializeField]
+    private ViewName prefabUi = null;
 
     [SerializeField]
     private int maxBot = 3;
@@ -77,9 +83,14 @@ public class SpawnCars : MonoBehaviour
     private void SpawPlayer ()
     {
         Transform startPoint = CheckPosition();
-        Transform transformPlayer = Instantiate(prefabPlayer, startPoint.position, startPoint.rotation, parent);
+        Transform transformPlayer = Instantiate(prefabPlayer, startPoint.position, startPoint.rotation, parentCar);
         transformPlayer.name = "Player";
         transformPlayer.GetComponent<DriverName>().Driver_Name = ConstString.PLAYER_NAME;
+
+        ViewName viewName = Instantiate(prefabUi, Vector3.one * 1000, Quaternion.identity, parentUi);
+        viewName.name = "ViewName_" + ConstString.PLAYER_NAME;
+        viewName.Init(transformPlayer, Color.white, ConstString.PLAYER_NAME);
+
         EventManager.CallSpawnPlayer (transformPlayer);
     }
 
@@ -97,7 +108,7 @@ public class SpawnCars : MonoBehaviour
             }
 
             Transform startPoint = CheckPosition();
-            Transform transformBot = Instantiate(prefabBot, startPoint.position, startPoint.rotation, parent);
+            Transform transformBot = Instantiate(prefabBot, startPoint.position, startPoint.rotation, parentCar);
             string nameDriver = NameBot();
             transformBot.name = "Enemy_" + nameDriver;
             transformBot.GetComponent<DriverName>().Driver_Name = nameDriver;
@@ -110,7 +121,11 @@ public class SpawnCars : MonoBehaviour
             Color newBotColor = CheckColor();
             AddColorBot(newBotColor, transformBot);
 
-            transformBot.gameObject.SetActive(true);
+            ViewName viewName = Instantiate (prefabUi, Vector3.one * 1000, Quaternion.identity, parentUi);
+            viewName.name = "ViewName_" + nameDriver;
+            viewName.Init(transformBot, newBotColor, nameDriver);
+
+            //transformBot.gameObject.SetActive(true);
             numberBot++;
         }
     }
@@ -170,7 +185,7 @@ public class SpawnCars : MonoBehaviour
     /// </summary>
     private void SpawnWaypointCircuit (string nameDriver)
     {
-        WaypointCircuit waypointCircuit = Instantiate(prefabWayPount, parent.position, Quaternion.identity, parent);
+        WaypointCircuit waypointCircuit = Instantiate(prefabWayPount, parentCar.position, Quaternion.identity, parentCar);
         WaypointCircuit.WaypointList waypointList = new WaypointCircuit.WaypointList();
         waypointCircuit.name = "WayPoints_" + nameDriver;
         int rnd = Random.Range(0,pathsContainer.Paths.Count);
