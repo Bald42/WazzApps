@@ -61,14 +61,12 @@ namespace UnityStandardAssets.Utility
         public Vector3 GetRoutePosition(float dist)
         {
             int point = 0;
-            /*
-            if (waypointList != null && Length != null && Length == 0)
+
+            if (Length == 0)
             {
-                Debug.LogError("Length = " + Length);
-                Debug.LogError("distances = " + distances);
                 Length = distances[distances.Length - 1];
             }
-            */
+
             /*
             try
             {

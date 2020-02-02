@@ -58,6 +58,7 @@ public class RecordPaths : MonoBehaviour
     private void OnFinish ()
     {
         StopAllCoroutines();
+        path.WayPoints.RemoveAt(0);
         pathsContainer.Paths.Add(path);
     }
 

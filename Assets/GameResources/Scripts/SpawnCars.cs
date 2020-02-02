@@ -36,6 +36,9 @@ public class SpawnCars : MonoBehaviour
 
     private WaypointCircuit newWaypointCircuit = new WaypointCircuit();
 
+    [SerializeField]
+    private GameObject point = null;
+
     private void Start()
     {
         Init();
@@ -151,8 +154,7 @@ public class SpawnCars : MonoBehaviour
         {
             newWayPoint.x = pathsContainer.Paths[rnd].WayPoints[i].x;
             newWayPoint.z = pathsContainer.Paths[rnd].WayPoints[i].y;
-
-            GameObject point = new GameObject();
+            
             GameObject newPoint = Instantiate(point, newWayPoint, Quaternion.identity, waypointCircuit.transform);
             newPoint.name = "WayPoint" + i.ToString();
             waypointList.items.Add(newPoint.transform);

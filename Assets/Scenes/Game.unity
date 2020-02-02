@@ -2547,11 +2547,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Waypoints
       objectReference: {fileID: 0}
-    - target: {fileID: 2748045248387041869, guid: d5bbc1e7abac1c543ae5b56e4c9d2f3e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2748045248387041874, guid: d5bbc1e7abac1c543ae5b56e4c9d2f3e,
         type: 3}
       propertyPath: m_LocalPosition.x
