@@ -8,14 +8,27 @@ using UnityEngine;
 public static class EventManager
 {
     public delegate void EmptyEventHandler();
+    public static event EmptyEventHandler OnViewFinish = delegate { };
     public static event EmptyEventHandler OnFinish = delegate { };
     public static event EmptyEventHandler OnStart = delegate { };
+    public static event EmptyEventHandler OnCheckpoin = delegate { };
 
     public delegate void TransformEventHandler (Transform transform);
     public static event TransformEventHandler OnSpawnPlayer = delegate { };
 
+    public delegate void StringEventHandler(string name);
+    public static event StringEventHandler OnViewResult = delegate { };
+
     public delegate void SpawnBotEventHandler(Transform transform, Color color, string name);
     public static event SpawnBotEventHandler OnSpawnBot = delegate { };
+
+    /// <summary>
+    /// Вызываем событие показа финиша
+    /// </summary>
+    public static void CallOnViewFinish()
+    {
+        OnViewFinish();
+    }
 
     /// <summary>
     /// Вызываем событие финиша
@@ -34,10 +47,26 @@ public static class EventManager
     }
 
     /// <summary>
+    /// Вызываем событие прохождения чекпоинта
+    /// </summary>
+    public static void CallCheckpoint()
+    {
+        OnCheckpoin();
+    }
+
+    /// <summary>
     /// Вызываем событие спавна плеера
     /// </summary>
     public static void CallSpawnPlayer(Transform _transform)
     {
         OnSpawnPlayer(_transform);
+    }
+
+    /// <summary>
+    /// Вызываем событие показа результата
+    /// </summary>
+    public static void CallViewResult(string _name)
+    {
+        OnViewResult(_name);
     }
 }
