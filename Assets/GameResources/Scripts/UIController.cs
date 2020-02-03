@@ -13,6 +13,9 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private AnimScale finishPanel = null;
 
+    [SerializeField]
+    private AnimScale mapPanel = null;
+
     #region Subscribes / UnSubscribes
     private void OnEnable()
     {
@@ -27,18 +30,19 @@ public class UIController : MonoBehaviour
     /// <summary>Подписки</summary>
     private void Subscribe()
     {
-        EventManager.OnFinish += OnFinish;
+        EventManager.OnViewFinish += OnViewFinish;
     }
 
     /// <summary>Отписки</summary>
     private void UnSubscribe()
     {
-        EventManager.OnFinish -= OnFinish;
+        EventManager.OnViewFinish -= OnViewFinish;
     }
 
-    private void OnFinish()
+    private void OnViewFinish()
     {
         buttonControl.Active(false);
+        mapPanel.Active(false);
         finishPanel.Active(true);
     }
     #endregion
