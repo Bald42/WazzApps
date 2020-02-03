@@ -22,6 +22,7 @@ public class ViewResult : MonoBehaviour
     /// </summary>
     public void Init (string _name, string _result)
     {
+        animScale.Active(false, false);
         textName.text = _name;
         textResult.text = _result;
         animScale.Active(true);

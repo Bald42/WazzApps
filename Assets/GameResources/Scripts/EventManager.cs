@@ -16,8 +16,11 @@ public static class EventManager
     public delegate void TransformEventHandler (Transform transform);
     public static event TransformEventHandler OnSpawnPlayer = delegate { };
 
+    public delegate void ViewResultEventHandler(string name, string time);
+    public static event ViewResultEventHandler OnViewResult = delegate { };
+
     public delegate void StringEventHandler(string name);
-    public static event StringEventHandler OnViewResult = delegate { };
+    public static event StringEventHandler OnFinishName = delegate { };
 
     public delegate void SpawnBotEventHandler(Transform transform, Color color, string name);
     public static event SpawnBotEventHandler OnSpawnBot = delegate { };
@@ -65,8 +68,16 @@ public static class EventManager
     /// <summary>
     /// Вызываем событие показа результата
     /// </summary>
-    public static void CallViewResult(string _name)
+    public static void CallViewResult(string _name, string _time)
     {
-        OnViewResult(_name);
+        OnViewResult(_name, _time);
+    }
+
+    /// <summary>
+    /// Вызываем событие завершившего гонку
+    /// </summary>
+    public static void CallFinishName(string _name)
+    {
+        OnFinishName(_name);
     }
 }

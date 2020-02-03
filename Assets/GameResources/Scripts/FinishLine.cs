@@ -11,15 +11,10 @@ public class FinishLine : MonoBehaviour
     {
         if (other.tag == ConstString.PLAYER_TAG)
         {
-            OnFinish();
+            EventManager.CallFinish();
         }
-    }
 
-    /// <summary>
-    /// ВЫзываем событие финиша
-    /// </summary>
-    private void OnFinish ()
-    {
-        EventManager.CallFinish();
+        string _name = other.transform.GetComponentInParent<DriverName>().Driver_Name;
+        EventManager.CallFinishName(_name);        
     }
 }

@@ -14,7 +14,7 @@ public class AnimScale : MonoBehaviour
 
     private const float MIN = 0.0001f;
 
-    private const float SPEED = 10f;
+    private const float SPEED = 5f;
 
     /// <summary>
     /// Открываем/закрываем окно
