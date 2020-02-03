@@ -27,16 +27,16 @@ public class UIController : MonoBehaviour
     /// <summary>Подписки</summary>
     private void Subscribe()
     {
-        EventManager.OnFinish += OnFinish;
+        EventManager.OnViewFinish += OnViewFinish;
     }
 
     /// <summary>Отписки</summary>
     private void UnSubscribe()
     {
-        EventManager.OnFinish -= OnFinish;
+        EventManager.OnViewFinish -= OnViewFinish;
     }
 
-    private void OnFinish()
+    private void OnViewFinish()
     {
         buttonControl.Active(false);
         finishPanel.Active(true);

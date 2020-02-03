@@ -42,20 +42,20 @@ public class RecordPaths : MonoBehaviour
     private void Subscribe()
     {
         EventManager.OnSpawnPlayer += OnSpawnPlayer;
-        EventManager.OnFinish += OnFinish;
+        EventManager.OnViewFinish += OnViewFinish;
     }
 
     /// <summary>Отписки</summary>
     private void UnSubscribe()
     {
-        EventManager.OnFinish -= OnFinish;
+        EventManager.OnViewFinish -= OnViewFinish;
         EventManager.OnSpawnPlayer -= OnSpawnPlayer;
     }
 
     /// <summary>
     /// Обработчик события финиш
     /// </summary>
-    private void OnFinish ()
+    private void OnViewFinish()
     {
         StopAllCoroutines();
         path.WayPoints.RemoveAt(0);
