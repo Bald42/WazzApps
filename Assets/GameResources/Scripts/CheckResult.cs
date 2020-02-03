@@ -40,14 +40,14 @@ public class CheckResult : MonoBehaviour
     private void Subscribe()
     {
         EventManager.OnFinishName += OnFinishName;
-        EventManager.OnFinish += OnFinish;
+        EventManager.OnViewFinish += OnViewFinish;
     }
 
     /// <summary>Отписки</summary>
     private void UnSubscribe()
     {
         EventManager.OnFinishName -= OnFinishName;
-        EventManager.OnFinish -= OnFinish;
+        EventManager.OnViewFinish -= OnViewFinish;
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class CheckResult : MonoBehaviour
     /// <summary>
     /// Обработчик события завершения гонки
     /// </summary>
-    private void OnFinish()
+    private void OnViewFinish()
     {
         if (!isFinish)
         {
@@ -99,7 +99,6 @@ public class CheckResult : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine(DelayViewResult());
-            //EventManager.CallViewResult(newResult.Name, newResult.Time);
         }
     }
 
